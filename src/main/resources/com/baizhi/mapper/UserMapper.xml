@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.baizhi.dao.UserDao">
+    <!--insert-->
+    <insert id="insert" parameterType="User">
+        insert into guoqinguser (username,password,role,phone,email,ip,form,status) values (#{username},#{password},#{role},#{phone},#{email},#{ip},#{form},#{status})
+    </insert>
+    <!--DELETE  -->
+    <delete id="delete" parameterType="java.lang.String">
+        delete from guoqinguser where username=#{username}
+    </delete>
+    <!--update-->
+    <update id="update" parameterType="User">
+        update guoqinguser
+           <set>
+               <if test="phone!=null">phone=#{phone},</if>
+               <if test="email!=null">email=#{email}</if>
+               <if test="status!=null">status=#{status}</if>
+           </set>  where username=#{username}
+    </update>
+    <!---->
+    <select id="selectOne" parameterType="java.lang.String" resultType="User">
+        select * from guoqinguser where username=#{username}
+    </select>
+    <!--queryAll-->
+    <select id="queryAll" resultType="User">
+         select * from guoqinguser where role='普通用户'
+    </select>
+    <!--queryUser-->
+    <select id="queryUser" parameterType="java.lang.String" resultType="User">
+         select * from guoqinguser where role='普通用户' and username like #{username}
+    </select>
+
+</mapper>
